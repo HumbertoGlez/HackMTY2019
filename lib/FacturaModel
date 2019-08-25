@@ -1,0 +1,123 @@
+import 'dart:convert';
+
+Factura facturaFromJson(String str) {
+  final jsonData = json.decode(str);
+  return Factura.fromMap(jsonData);
+}
+
+String facturaToJson(Factura data) {
+  final dyn = data.toMap();
+  return json.encode(dyn);
+}
+
+Welcome welcomeFromJson(String str) => Welcome.fromMap(json.decode(str));
+
+String welcomeToJson(Welcome data) => json.encode(data.toMap());
+
+class Welcome {
+  List<Factura> factura;
+
+  Welcome({
+    this.factura,
+  });
+
+  factory Welcome.fromMap(Map<String, dynamic> json) => new Welcome(
+    factura: new List<Factura>.from(json["Factura"].map((x) => Factura.fromMap(x))),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "Factura": new List<dynamic>.from(factura.map((x) => x.toMap())),
+  };
+}
+
+class Factura {
+  String uuid;
+  String rfc;
+  String ccyisocode;
+  String ccyfx;
+  int paymentmethod;
+  String paymenttype;
+  int productid;
+  int quantity;
+  double cost;
+  double subtotal;
+  double total;
+  int iva;
+  int placegenerated;
+  DateTime date;
+  String receptorrfc;
+  String receptorname;
+  String emisorrfc;
+  String emisorname;
+  String status;
+  String tipo;
+
+  Factura({
+    this.uuid,
+    this.rfc,
+    this.ccyisocode,
+    this.ccyfx,
+    this.paymentmethod,
+    this.paymenttype,
+    this.productid,
+    this.quantity,
+    this.cost,
+    this.subtotal,
+    this.total,
+    this.iva,
+    this.placegenerated,
+    this.date,
+    this.receptorrfc,
+    this.receptorname,
+    this.emisorrfc,
+    this.emisorname,
+    this.status,
+    this.tipo,
+  });
+
+  factory Factura.fromMap(Map<String, dynamic> json) => new Factura(
+    uuid: json["uuid"],
+    rfc: json["rfc"],
+    ccyisocode: json["ccyisocode"],
+    ccyfx: json["ccyfx"],
+    paymentmethod: json["paymentmethod"],
+    paymenttype: json["paymenttype"],
+    productid: json["productid"],
+    quantity: json["quantity"],
+    cost: json["cost"].toDouble(),
+    subtotal: json["subtotal"].toDouble(),
+    total: json["total"].toDouble(),
+    iva: json["iva"],
+    placegenerated: json["placegenerated"],
+    date: DateTime.parse(json["date"]),
+    receptorrfc: json["receptorrfc"],
+    receptorname: json["receptorname"],
+    emisorrfc: json["emisorrfc"],
+    emisorname: json["emisorname"],
+    status: json["status"],
+    tipo: json["tipo"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "uuid": uuid,
+    "rfc": rfc,
+    "ccyisocode": ccyisocode,
+    "ccyfx": ccyfx,
+    "paymentmethod": paymentmethod,
+    "paymenttype": paymenttype,
+    "productid": productid,
+    "quantity": quantity,
+    "cost": cost,
+    "subtotal": subtotal,
+    "total": total,
+    "iva": iva,
+    "placegenerated": placegenerated,
+    "date": date.toIso8601String(),
+    "receptorrfc": receptorrfc,
+    "receptorname": receptorname,
+    "emisorrfc": emisorrfc,
+    "emisorname": emisorname,
+    "status": status,
+    "tipo": tipo,
+  };
+}
