@@ -42,8 +42,8 @@ class Factura {
   double cost;
   double subtotal;
   double total;
-  int iva;
-  int placegenerated;
+  double iva;
+  String placegenerated;
   DateTime date;
   String receptorrfc;
   String receptorname;

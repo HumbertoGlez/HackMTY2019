@@ -59,62 +59,36 @@ class DBProvider {
     var raw = await db.rawInsert(
         "INSERT Into Factura (uuid, rfc, ccyisocode, ccyfx, paymentmethod, paymenttype, productid, quantity, cost, subtotal, total, iva, placegenerated, date, receptorrfc, receptorname, emisorrfc, emisorname, status, tipo)"
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [newFactura.uuid, newFactura.rfc, newFactura.ccyisocode, newFactura.ccyfx, newFactura.paymentmethod, newFactura.paymenttype, newFactura.productid, newFactura.quantity, newFactura.cost, newFactura.subtotal, newFactura.total, newFactura.iva, newFactura.placegenerated, newFactura.date, newFactura.receptorrfc, newFactura.receptorname, newFactura.emisorrfc, newFactura.emisorname, newFactura.status, newFactura.tipo]);
+        [
+          newFactura.uuid,
+          newFactura.rfc,
+          newFactura.ccyisocode,
+          newFactura.ccyfx,
+          newFactura.paymentmethod,
+          newFactura.paymenttype,
+          newFactura.productid,
+          newFactura.quantity,
+          newFactura.cost,
+          newFactura.subtotal,
+          newFactura.total,
+          newFactura.iva,
+          newFactura.placegenerated,
+          newFactura.date,
+          newFactura.receptorrfc,
+          newFactura.receptorname,
+          newFactura.emisorrfc,
+          newFactura.emisorname,
+          newFactura.status,
+          newFactura.tipo
+        ]);
     return raw;
   }
 
-  blockOrUnblock(Client client) async {
+  Future<int> numberClients() async {
     final db = await database;
-    Client blocked = Client(
-        id: client.id,
-        firstName: client.firstName,
-        lastName: client.lastName,
-        blocked: !client.blocked);
-    var res = await db.update("Client", blocked.toMap(),
-        where: "id = ?", whereArgs: [client.id]);
-    return res;
-  }
-
-  updateClient(Client newClient) async {
-    final db = await database;
-    var res = await db.update("Client", newClient.toMap(),
-        where: "id = ?", whereArgs: [newClient.id]);
-    return res;
-  }
-
-  getClient(int id) async {
-    final db = await database;
-    var res = await db.query("Client", where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? Client.fromMap(res.first) : null;
-  }
-
-  Future<List<Client>> getBlockedClients() async {
-    final db = await database;
-
-    print("works");
-    // var res = await db.rawQuery("SELECT * FROM Client WHERE blocked=1");
-    var res = await db.query("Client", where: "blocked = ? ", whereArgs: [1]);
-
-    List<Client> list =
-    res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
-    return list;
-  }
-
-  Future<List<Client>> getAllClients() async {
-    final db = await database;
-    var res = await db.query("Client");
-    List<Client> list =
-    res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
-    return list;
-  }
-
-  deleteClient(int id) async {
-    final db = await database;
-    return db.delete("Client", where: "id = ?", whereArgs: [id]);
-  }
-
-  deleteAll() async {
-    final db = await database;
-    db.rawDelete("Delete * from Client");
+    var num = await db.rawQuery(
+        "SELECT COUNT(uuid) FROM Factura WHERE tipo='venta' GROUP BY uuid");
+    var count = num[0].values.elementAt(0);
+    return count;
   }
 }
