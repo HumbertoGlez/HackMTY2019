@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
+
 
 void main() => runApp(MyApp());
 Color konfioPurple = const Color.fromARGB(0xFF, 0x72, 0x64, 0xc9);
 Color konfioDarkPurple = const Color.fromARGB(0xFF, 0x57, 0x4b, 0xa8);
 Color konfioLightPurple = const Color.fromARGB(0xFF, 0xB4, 0xC5, 0xF1);
+Color konfioGreenDark = const Color.fromARGB(0xFF, 0x00, 0xC2, 0xA2);
+Color konfioGreyLight = const Color.fromARGB(0xFF, 0xB1, 0xB9, 0xC1);
+Color konfioGreenLight = const Color.fromARGB(0xFF, 0x67, 0xE8, 0xD3);
+var data = [0.0, 1.0, 3.0, 2.0];
+var data1 = [0.0, 4.0, 5.0, 3.0];
+
+
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
   static const String _title = 'Asesor Financiero Pyme';
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +26,9 @@ class MyApp extends StatelessWidget {
       title: _title,
       theme: ThemeData(fontFamily: 'Montserrat'),
       home: MyStatefulWidget(),
+
     );
+
   }
 }
 
@@ -33,29 +46,75 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Gastos',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Facturación',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Ventas',
-      style: optionStyle,
-    ),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+  Material mychart2Items(String title, String priceVal,String subtitle) {
+    return Material(
+      color: Colors.white,
+      elevation: 14.0,
+      borderRadius: BorderRadius.circular(24.0),
+      shadowColor: Color(0x802196F3),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
 
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Text(title, style: TextStyle(
+                      fontSize: 20.0,
+                      color: konfioDarkPurple,
+                    ),),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Text(priceVal, style: TextStyle(
+                      fontSize: 30.0,
+                    ),),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Text(subtitle, style: TextStyle(
+                      fontSize: 20.0,
+                      color: konfioGreenDark,
+                    ),),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: new Sparkline(
+                      data: data1,
+                      fillMode: FillMode.below,
+                      fillGradient: new LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [konfioGreenDark, konfioGreenLight],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
+    AssetImage cir1 = AssetImage('images/cir1.png');
+    Image c1 = Image(image: cir1);
+    AssetImage cir2 = AssetImage('images/cir2.png');
+    Image c2 = Image(image: cir2);
     return Scaffold(
 //      appBar: AppBar(
 //        title: const Text('Asesor Financiero'),
@@ -201,125 +260,122 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     ),
                   )
                 ),
+                Text(
+                  'Facturas de gastos más altos del periodo',
+                  style: TextStyle(color: konfioPurple),
+                  textScaleFactor: 2,
+                ),
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: Material(
                   color: Colors.white,
                   elevation: 14.0,
                   shadowColor: Color(0x802196F3),
-                  child: ListView(
-                    children: [
-                      Text(
-                        'Facturas de gastos más altos del periodo',
-                        style: TextStyle(color: konfioPurple),
-                        textScaleFactor: 2,
-                      ),
-                      Table(
-                      border: TableBorder.all(),
-                      children: [
-                        TableRow(
-                            children: [
-                              Text(
-                                'Fecha',
-                                style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                'RFC',
-                                style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
-                                textAlign: TextAlign.center,
+                  child: Table(
+                  border: TableBorder.all(),
+                  children: [
+                    TableRow(
+                        children: [
+                          Text(
+                            'Fecha',
+                            style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'RFC',
+                            style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                'Razón Social',
-                                style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Razón Social',
+                            style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                'Importe',
-                                style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
-                                textAlign: TextAlign.center,
-                              )
-                            ]
-                        ),
-                        TableRow(
-                            children: [
-                              Text(
-                                '1/11/18',
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                'GOM0809114P5',
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Importe',
+                            style: TextStyle(fontStyle: FontStyle.italic, color: konfioPurple),
+                            textAlign: TextAlign.center,
+                          )
+                        ]
+                    ),
+                    TableRow(
+                        children: [
+                          Text(
+                            '1/11/18',
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'GOM0809114P5',
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                'Google Operaciones de México',
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Google Operaciones de México',
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                '\$11,005.28',
-                                textAlign: TextAlign.center,
-                              )
-                            ]
-                        ),
-                        TableRow(
-                            children: [
-                              Text(
-                                '1/02/19',
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                'GOM0809114P5',
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            '\$11,005.28',
+                            textAlign: TextAlign.center,
+                          )
+                        ]
+                    ),
+                    TableRow(
+                        children: [
+                          Text(
+                            '1/02/19',
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'GOM0809114P5',
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                'Google Operaciones de México',
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Google Operaciones de México',
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                '\$10,282.169',
-                                textAlign: TextAlign.center,
-                              )
-                            ]
-                        ),
-                        TableRow(
-                            children: [
-                              Text(
-                                '2/12/18',
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                'GOM0809114P5',
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            '\$10,282.169',
+                            textAlign: TextAlign.center,
+                          )
+                        ]
+                    ),
+                    TableRow(
+                        children: [
+                          Text(
+                            '2/12/18',
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'GOM0809114P5',
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                'Google Operaciones de México',
-                                textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Google Operaciones de México',
+                            textAlign: TextAlign.center,
 
-                              ),
-                              Text(
-                                '\$8,597.975',
-                                textAlign: TextAlign.center,
-                              )
-                            ]
-                        )
-                      ],
-                    )
-                  ]
-                )
+                          ),
+                          Text(
+                            '\$8,597.975',
+                            textAlign: TextAlign.center,
+                          )
+                        ]
+                      )
+                    ],
                   )
                 )
+                ),
               ],
               staggeredTiles: [
                 StaggeredTile.extent(1, 200),
                 StaggeredTile.extent(1, 250),
                 StaggeredTile.extent(1, 250),
+                StaggeredTile.extent(1, 75),
                 StaggeredTile.extent(1, 300)
               ],
             )
@@ -327,39 +383,414 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         break;
 
       case 1: // Facturacion
-        return Stack(
-          children: <Widget>[
-            Container(
-              child: Row(
-                children: [
-                  Card(
-                    child: Column(
-
-                    ),
-                  )
+        return
+          Container(
+              child: StaggeredGridView.count(
+                crossAxisCount: 1,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 0.0,
+                children: <Widget>[
+                  Text(
+                    "Tu Facturación",
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 2.5,
+                  ),
+                  /// VENTAS
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                          color: konfioGreenDark,
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(24.0),
+                          shadowColor: Color(0x802196F3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.attach_money,
+                                color: Colors.white,
+                                size: 80,
+                              ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                Text(
+                                  '293,019,991',
+                                  overflow: TextOverflow.ellipsis,
+                                  textScaleFactor: 3,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  'Ventas',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.white),
+                                  textScaleFactor: 1.5,
+                                )
+                              ]
+                                ),
+                              ],
+                          )
+                      )
+                  ),
+                  ///GASTOS
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                          color: konfioDarkPurple,
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(24.0),
+                          shadowColor: Color(0x802196F3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.attach_money,
+                                color: Colors.white,
+                                size: 80,
+                              ),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      '180,141,485',
+                                      overflow: TextOverflow.ellipsis,
+                                      textScaleFactor: 3,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    Text(
+                                      'Gastos',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(color: Colors.white),
+                                      textScaleFactor: 1.5,
+                                    )
+                                  ]
+                              ),
+                            ],
+                          )
+                      )
+                  ),
+                  /// GANANCIAS
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                          color: konfioGreyLight,
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(24.0),
+                          shadowColor: Color(0x802196F3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.attach_money,
+                                color: Colors.white,
+                                size: 80,
+                              ),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      '112,878,506',
+                                      overflow: TextOverflow.ellipsis,
+                                      textScaleFactor: 3,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    Text(
+                                      'Ganancias',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(color: Colors.white),
+                                      textScaleFactor: 1.5,
+                                    )
+                                  ]
+                              ),
+                            ],
+                          )
+                      )
+                  ),
+                  ///GRAFICA
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: mychart2Items("Ingresos / Egresos","",""),
+                  ),
+                  ///IVA
+                  Text(
+                    "Tu IVA",
+                    textAlign: TextAlign.center,
+                    textScaleFactor: 2.5,
+                  ),
+                  /*
+                  ///GRAFICA
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: mychart2Items("Ingresos vs Egresos","",""),
+                  ),
+                  *
+                  /
+                   */
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                          child: Material(
+                            color: Colors.white,
+                            elevation: 5.0,
+                            borderRadius: BorderRadius.circular(24.0),
+                            shadowColor: Color(0x802196F3),
+                            child: Image.asset(
+                                'images/cir1.png',
+                                width: 50,
+                                height: 50,
+                            ),
+                      ),
+                      ),
                 ],
-              ),
-            )
-          ],
-        );
+                staggeredTiles: [
+                  StaggeredTile.extent(1, 50),
+                  StaggeredTile.extent(1, 125),
+                  StaggeredTile.extent(1, 125),
+                  StaggeredTile.extent(1, 125),
+                  StaggeredTile.extent(1, 250),
+                  StaggeredTile.extent(1, 50),
+                  StaggeredTile.extent(1, 250),
+                  StaggeredTile.extent(1, 250),
+                  StaggeredTile.extent(1, 125)
+                ],
+              )
+          );
+
         break;
 
       case 2: // Ventas
-        return Stack(
-          children: <Widget>[
-            Container(
-              child: Row(
-                children: [
-                  Card(
-                    child: Column(
+        return
+          Container(
+              child: StaggeredGridView.count(
+                crossAxisCount: 1,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 0.0,
+                children: <Widget>[
+                  /// NUMERO DE CLIENTES
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                          color: konfioGreenDark,
+                          elevation: 14.0,
+                          borderRadius: BorderRadius.circular(24.0),
+                          shadowColor: Color(0x802196F3),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: konfioGreenLight,
+                                size: 50,
+                              ),
+                              Text(
+                                '2749',
+                                overflow: TextOverflow.ellipsis,
+                                textScaleFactor: 3,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                'Clientes en el periodo',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.white),
+                                textScaleFactor: 1.5,
+                              )
+                            ],
+                          )
+                      )
+                  ),
+                  ///  VENTA MAS GRANDE
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                        color: Colors.white,
+                        elevation: 14.0,
+                        borderRadius: BorderRadius.circular(24.0),
+                        shadowColor: Color(0x802196F3),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.event_available,
+                              color: konfioGreenLight,
+                              size: 50,
+                            ),
+                            Text(
+                              "\$3,990.750",
+                              overflow: TextOverflow.ellipsis,
+                              textScaleFactor: 2,
+                              style: TextStyle(color: konfioPurple),
+                            ),
+                            Text(
+                              'Venta más grande del periodo',
+                              overflow: TextOverflow.ellipsis,
+                              textScaleFactor: 1.5,
+                            ),
+                            Text(
+                              'scotiabank inverlat, s. a.',
+                              overflow: TextOverflow.visible,
+                              textScaleFactor: 1.5,
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      )
+                  ),
+                  /// Cliente MAS GRANDE
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                        color: Colors.white,
+                        elevation: 14.0,
+                        borderRadius: BorderRadius.circular(24.0),
+                        shadowColor: Color(0x802196F3),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: konfioGreenLight,
+                              size: 50,
+                            ),
+                            Text(
+                              "\$9,828.196",
+                              overflow: TextOverflow.ellipsis,
+                              textScaleFactor: 2,
+                              style: TextStyle(color: konfioPurple),
+                            ),
+                            Text(
+                              'Cliente más grande del periodo',
+                              overflow: TextOverflow.ellipsis,
+                              textScaleFactor: 1.5,
+                            ),
+                            Text(
+                              'scotiabank inverlat, s. a.',
+                              overflow: TextOverflow.visible,
+                              textScaleFactor: 1.5,
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      )
+                  ),
+                  Text(
+                    'Facturas de ventas más altas del periodo',
+                    style: TextStyle(color: konfioGreenDark),
+                    textScaleFactor: 2,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Material(
+                          color: Colors.white,
+                          elevation: 14.0,
+                          shadowColor: Color(0x802196F3),
+                          child: Table(
+                            border: TableBorder.all(),
+                            children: [
+                              TableRow(
+                                  children: [
+                                    Text(
+                                      'Fecha',
+                                      style: TextStyle(fontStyle: FontStyle.italic, color: konfioGreenDark),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'RFC',
+                                      style: TextStyle(fontStyle: FontStyle.italic, color: konfioGreenDark),
+                                      textAlign: TextAlign.center,
 
-                    ),
-                  )
+                                    ),
+                                    Text(
+                                      'Razón Social',
+                                      style: TextStyle(fontStyle: FontStyle.italic, color: konfioGreenDark),
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      'Importe',
+                                      style: TextStyle(fontStyle: FontStyle.italic, color: konfioGreenDark),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ]
+                              ),
+                              TableRow(
+                                  children: [
+                                    Text(
+                                      '10/01/19',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'SIN941202514',
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      'SCOTIABANK INVERLAT, S.A.',
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      '\$3,990,750',
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ]
+                              ),
+                              TableRow(
+                                  children: [
+                                    Text(
+                                      '1/02/19',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'SIN9412025IA',
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      'SCOTIABANK INVERLAT, S.A.',
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      '\$3,174,240',
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ]
+                              ),
+                              TableRow(
+                                  children: [
+                                    Text(
+                                      '14/02/19',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'SIN9412025I4',
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      'SCOTIABANK INVERLAT, S.A.',
+                                      textAlign: TextAlign.center,
+
+                                    ),
+                                    Text(
+                                      '\$2,363,900',
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ]
+                              )
+                            ],
+                          )
+                      )
+                  ),
                 ],
-              ),
-            )
-          ],
-        );
+                staggeredTiles: [
+                  StaggeredTile.extent(1, 200),
+                  StaggeredTile.extent(1, 250),
+                  StaggeredTile.extent(1, 250),
+                  StaggeredTile.extent(1, 75),
+                  StaggeredTile.extent(1, 300)
+                ],
+              )
+          );
         break;
         
       default: 
