@@ -435,7 +435,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 StaggeredTile.extent(1, 250),
                 StaggeredTile.extent(1, 250),
                 StaggeredTile.extent(1, 75),
-                StaggeredTile.extent(1, 2)
+                StaggeredTile.extent(1, 250)
               ],
             )
         );
