@@ -10,9 +10,10 @@ Color konfioLightPurple = const Color.fromARGB(0xFF, 0xB4, 0xC5, 0xF1);
 Color konfioGreenDark = const Color.fromARGB(0xFF, 0x00, 0xC2, 0xA2);
 Color konfioGreyLight = const Color.fromARGB(0xFF, 0xB1, 0xB9, 0xC1);
 Color konfioGreenLight = const Color.fromARGB(0xFF, 0x67, 0xE8, 0xD3);
-var data = [0.0, 1.0, 3.0, 2.0];
-var data1 = [0.0, 4.0, 5.0, 3.0];
-
+var data = [3.0, 1.0, 3.0, 2.0];
+var data1 = [2.0, 10.0, 8.0, 12.0];
+var data2 = [0.0, 8.0, 7.0, 5.0];
+var data3 = [0.0, 6.0, 9.0, 4.0];
 
 /// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
@@ -51,6 +52,64 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
+  Material mychart1Items(String title, String priceVal,String subtitle) {
+    return Material(
+      color: Colors.white,
+      elevation: 14.0,
+      borderRadius: BorderRadius.circular(24.0),
+      shadowColor: Color(0x802196F3),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Text(title, style: TextStyle(
+                      fontSize: 20.0,
+                      color: konfioGreenDark,
+                    ),),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Text(priceVal, style: TextStyle(
+                      fontSize: 30.0,
+                    ),),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: Text(subtitle, style: TextStyle(
+                      fontSize: 20.0,
+                      color: konfioGreenDark,
+                    ),),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(1.0),
+                    child: new Sparkline(
+                      data: data1,
+                      fillMode: FillMode.below,
+                      fillGradient: new LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [konfioGreenDark, konfioGreenLight],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   Material mychart2Items(String title, String priceVal,String subtitle) {
     return Material(
       color: Colors.white,
@@ -85,19 +144,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     padding: EdgeInsets.all(1.0),
                     child: Text(subtitle, style: TextStyle(
                       fontSize: 20.0,
-                      color: konfioGreenDark,
+                      color: konfioDarkPurple,
                     ),),
                   ),
 
                   Padding(
                     padding: EdgeInsets.all(1.0),
                     child: new Sparkline(
-                      data: data1,
+                      data: data3,
                       fillMode: FillMode.below,
                       fillGradient: new LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [konfioGreenDark, konfioGreenLight],
+                        colors: [konfioDarkPurple, konfioLightPurple],
                       ),
                     ),
                   ),
@@ -509,7 +568,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ///GRAFICA
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: mychart2Items("Ingresos / Egresos","",""),
+                    child: mychart1Items("Ingresos","",""),
+                  ),
+                  ///GRAFICA
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: mychart2Items("Egresos","",""),
                   ),
                   ///IVA
                   Text(
@@ -634,6 +698,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   StaggeredTile.extent(1, 125),
                   StaggeredTile.extent(1, 125),
                   StaggeredTile.extent(1, 125),
+                  StaggeredTile.extent(1, 250),
                   StaggeredTile.extent(1, 250),
                   StaggeredTile.extent(1, 50),
                   StaggeredTile.extent(1, 270),
