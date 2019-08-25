@@ -47,7 +47,7 @@ class DBProvider {
     return raw;
   }
 
-  blockOrUnblock(Client client) async {
+  numberClients(Client client) async {
     final db = await database;
     Client blocked = Client(
         id: client.id,
