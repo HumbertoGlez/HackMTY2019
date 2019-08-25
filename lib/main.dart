@@ -111,15 +111,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    AssetImage cir1 = AssetImage('images/cir1.png');
-    Image c1 = Image(image: cir1);
-    AssetImage cir2 = AssetImage('images/cir2.png');
-    Image c2 = Image(image: cir2);
     return Scaffold(
-//      appBar: AppBar(
-//        title: const Text('Asesor Financiero'),
-//        backgroundColor: konfioPurple,
-//      ),
+      appBar: AppBar(
+        title: Image.asset(
+          'images/logo.png',
+          width: 100,
+          height: 100,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: _buildBody(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -376,7 +376,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 StaggeredTile.extent(1, 250),
                 StaggeredTile.extent(1, 250),
                 StaggeredTile.extent(1, 75),
-                StaggeredTile.extent(1, 300)
+                StaggeredTile.extent(1, 2)
               ],
             )
         );
@@ -533,13 +533,101 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             elevation: 5.0,
                             borderRadius: BorderRadius.circular(24.0),
                             shadowColor: Color(0x802196F3),
-                            child: Image.asset(
-                                'images/cir1.png',
-                                width: 50,
-                                height: 50,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Image.asset(
+                                  'images/cir1.png',
+                                  width: 180,
+                                  height: 180,
+                                ),
+                                Text(
+                                  "\$ 40,416,550",
+                                  style: TextStyle(color: konfioGreenLight),
+                                  textAlign: TextAlign.center,
+                                  textScaleFactor: 2.0,
+
+                                ),
+                                Text(
+                                  "IVA Cobrado",
+                                  style: TextStyle(color: konfioGreyLight),
+                                  textAlign: TextAlign.center,
+                                  textScaleFactor: 1.5,
+
+                                ),
+                              ],
                             ),
                       ),
                       ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Material(
+                      color: Colors.white,
+                      elevation: 5.0,
+                      borderRadius: BorderRadius.circular(24.0),
+                      shadowColor: Color(0x802196F3),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Image.asset(
+                          'images/cir2.png',
+                          width: 180,
+                          height: 180,
+                      ),
+                        Text(
+                          "\$ 24,847,101",
+                          style: TextStyle(color: konfioDarkPurple),
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 2.0,
+
+                        ),
+                          Text(
+                            "IVA Pagado",
+                            style: TextStyle(color: konfioGreyLight),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.5,
+
+                          ),
+                        ],
+                      ),
+                  ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Material(
+                      color: Colors.white,
+                      elevation: 5.0,
+                      borderRadius: BorderRadius.circular(24.0),
+                      shadowColor: Color(0x802196F3),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            "\$ 15,569,449",
+                            style: TextStyle(color: konfioDarkPurple),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 2.5,
+
+                          ),
+                          Text(
+                            "IVA a pagar",
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.5,
+
+                          ),
+                          Text(
+                            "*Esta información es una estimación aproximada basada en los datos de tu facturación",
+                            style: TextStyle(color: konfioGreyLight),
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.0,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  )
                 ],
                 staggeredTiles: [
                   StaggeredTile.extent(1, 50),
@@ -548,9 +636,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   StaggeredTile.extent(1, 125),
                   StaggeredTile.extent(1, 250),
                   StaggeredTile.extent(1, 50),
-                  StaggeredTile.extent(1, 250),
-                  StaggeredTile.extent(1, 250),
-                  StaggeredTile.extent(1, 125)
+                  StaggeredTile.extent(1, 270),
+                  StaggeredTile.extent(1, 270),
+                  StaggeredTile.extent(1, 250)
                 ],
               )
           );
@@ -617,7 +705,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               "\$3,990.750",
                               overflow: TextOverflow.ellipsis,
                               textScaleFactor: 2,
-                              style: TextStyle(color: konfioPurple),
+                              style: TextStyle(color: konfioGreenDark),
                             ),
                             Text(
                               'Venta más grande del periodo',
@@ -654,7 +742,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               "\$9,828.196",
                               overflow: TextOverflow.ellipsis,
                               textScaleFactor: 2,
-                              style: TextStyle(color: konfioPurple),
+                              style: TextStyle(color: konfioGreenDark),
                             ),
                             Text(
                               'Cliente más grande del periodo',
